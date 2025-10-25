@@ -23,8 +23,11 @@ client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 const cooldowns = new Map();
-client.on("messageCreate", (msg) => {
-    if (msg.author.bot) return;
+
+client.on("messageCreate", async (msg) => {
+    if (!client.user) return;
+    if(msg.author.bot) return;
+
     const userId = msg.author.id;
     if (cooldowns.has(userId)) return;
     coolsdowns.set(userId, True);
