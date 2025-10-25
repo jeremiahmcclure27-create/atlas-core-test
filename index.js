@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-    res.semd("Render bot is alive and running.");
+    res.send("Render bot is alive and running.");
 });
 
 app.listen(PORT, () => console.log(`Ping server running on port ${PORT}`));
@@ -24,7 +24,7 @@ const client = new Client({
 client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setPresence({
-        activities: [{ name: "monitoring the Core", type: 3}],
+        activities: [{ name: "Monitoring the Core", type: 3}],
     })
 });
 
