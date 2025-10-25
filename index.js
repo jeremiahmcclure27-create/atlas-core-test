@@ -11,18 +11,22 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => console.log(`Ping server running on port ${PORT}`));
 
+const cooldowns = new Map();
+
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent
-    ]
-})
+    ],
+});
 
 client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
+    client.user.setPresence({
+        activities: [{ name: "monitoring the Core", type: 3}],
+    })
 });
-const cooldowns = new Map();
 
 client.on("messageCreate", async (msg) => {
     if (!client.user) return;
@@ -30,10 +34,11 @@ client.on("messageCreate", async (msg) => {
 
     const userId = msg.author.id;
     if (cooldowns.has(userId)) return;
+
     coolsdowns.set(userId, True);
     setTimeout(() => cooldowns.delete(userId), 3000);
-    const content = msg.content.toLowerCase();
 
+    const content = msg.content.toLowerCase();
     const mentioned =
       msg.mentions.has(client.user) || content.includes("render");
 
@@ -54,7 +59,11 @@ client.on("messageCreate", async (msg) => {
     }
 });
 
-process.on("unhandledRejection", (err) => console.error("Unhandled Rejection;", err));
-process.on("uncaughtException", (err) => console.error("Uncaught Exception:", err));
+process.on("unhandledRejection", (err) => 
+     console.error("Uncaught Exception:", err)
+);
+process.on("uncaughtException", (err) =>
+console.error("Uncaught Exceptiom:", errr)
+);
     
 client.login(process.env.BOT_TOKEN);
