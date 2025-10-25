@@ -3,6 +3,11 @@
     "version": "1.0.0",
     "main": "index.js",
     "type": "module",
-    "scripts": {"start": "node index.js"},
-    "dependencies": {"discord.js": "^14.15.3"}
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "discord.js": "^14.24.0",
+        "dotenv": "^17.2.3"
+    }
 }
