@@ -22,9 +22,13 @@ const client = new Client({
 client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
-
+const cooldowns = new Map();
 client.on("messageCreate", (msg) => {
     if (msg.author.bot) return;
+    const userId = msg.author.id;
+    if (cooldowns.has(userId)) return;
+    coolsdowns.set(userId, True);
+    setTimeout(() => cooldowns.delete(userId), 3000);
     const content = msg.content.toLowerCase();
 
     const mentioned =
@@ -33,15 +37,17 @@ client.on("messageCreate", (msg) => {
     if (!mentioned) return;
 
     if (content.includes("ping")) {
-        msg.reply("🏓Pong steady and responsive.");
+        msg.reply("🔵Connection stable. Systems steady and respoonsive.");
     }   else if (content.includes("info")) {
-        msg.reply("Atlas Core Beta v0.1 - system stable and online.");
+        msg.reply("⚙️Atlas Core Beta v0.1 - calm, stable, and online.");
     }   else if (content.includes("quote")) {
-        msg.reply("Discipline is the quiet form of confidence.");
+        msg.reply("🧠Discipline whispers while chaos shouts. The calm decide.");
     }   else if (content.includes("focus")) {
-        msg.reply("Stay grounded. You move, the vision moves.");
+        msg.reply("⏳Stillness sharpens the mind. Focus is the first move.");
     }   else if (content.includes("hello") || content.includes("hey")) {
-        msg.reply("I'm here. What's the mission?);")
+        msg.reply("Present and aware. What's the task?");
+    }   else {
+        msg.reply("Processing input... be precise with your intent.");
     }
 });
 
