@@ -63,7 +63,7 @@ process.on("unhandledRejection", (err) =>
      console.error("Uncaught Exception:", err)
 );
 process.on("uncaughtException", (err) =>
-console.error("Uncaught Exceptiom:", errr)
+console.error("Uncaught Exceptiom:", err)
 );
     
 client.login(process.env.BOT_TOKEN);
