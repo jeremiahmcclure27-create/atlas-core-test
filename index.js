@@ -43,10 +43,9 @@ const presence = [
 ];
 
 setInterval(() => {
-    const randomPresence =
-      presences[Math.floor(Math.random() * presences.length)];
+    const randomPresence = presence[Math.floor(Math.random() * presence.length)];
     client.user.setPresence({ activities: [randomPresence], status: "online"});
-}, 600000);
+}, 180000);
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
