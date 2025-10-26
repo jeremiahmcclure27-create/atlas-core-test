@@ -1,0 +1,9 @@
+services:
+  -type: web
+  name: render-bot
+  env: node
+  plan: free
+  region: oregon
+  buildCommand: npm install 
+  startCommand: node index.js
+  autoDeploy: true
