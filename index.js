@@ -159,4 +159,5 @@ require("discord.js").Message.prototype,reply = async function(content) {
 
     return originalReply.call(this, content);
 };
+
 client.login(process.env.BOT_TOKEN);
