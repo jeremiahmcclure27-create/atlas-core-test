@@ -35,7 +35,7 @@ client.on("messageCreate", async (msg) => {
     const userId = msg.author.id;
     if (cooldowns.has(userId)) return;
 
-    coolsdowns.set(userId, True);
+    cooldowns.set(userId, True);
     setTimeout(() => cooldowns.delete(userId), 3000);
 
     const content = msg.content.toLowerCase();
