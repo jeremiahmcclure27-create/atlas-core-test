@@ -2,6 +2,7 @@ import express from "express";
 import { Client, GatewayIntentBits } from "discord.js";
 import "dotenv/config";
 
+const fs = require("fs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -10,6 +11,12 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Ping server running on port ${PORT}`));
+
+setInterval(() => {
+    fetch(`https://${process.env.RENDER_EXTERNAL_URL || "https://render-bot-h1xj.onrender.com"}`)
+    .then(() => console.log("Self-ping OK"))
+    .catch(() => console.log("Self-ping failed"));
+}, 600000);
 
 const cooldowns = new Map();
 
@@ -104,9 +111,13 @@ client.on("messageCreate", async (msg) => {
         reply = responses.hello;
     else reply = responses.default;
     
+    await msg.channel.sendTyping();
+    await wait(thinkingDelay);
+
     const randomReply = reply[Math.floor(Math.random() * reply.length)];
     msg.reply(randomReply);
 });
+
 
 process.on("unhandledRejection", (err) => 
      console.error("Uncaught Exception:", err)
@@ -115,4 +126,33 @@ process.on("uncaughtException", (err) =>
 console.error("Uncaught Exceptiom:", err)
 );
     
+client.on("messageCreate", async (msg) => {
+    if (msg.author.bot) return;
+
+    const userLog = {
+        role: "user",
+        username: msg.author.tag,
+        message: msg.content,
+        timestamp: new Date().toISOString()
+    };
+
+    fs.appendFile("message_log.json", JSON.stringify(userLog) + ",\n", (err) => {
+        if (err) console.error("User log error:", err);
+    });
+});
+
+const originalReply = require("discord.js").Message.prototype.reply;
+require("discord.js").Message.prototype,reply = async function(content) {
+    const botLog = {
+        role: "Render",
+        message: typeof content === "string" ? content : content.content,
+        timestamp: new Date().toISOString()
+    };
+
+    fs.appendFile("message_log.json", JSON.stringify(botLog) + ",\n", (err) => {
+      if (err) console.error("Bot log error:", err);
+    });
+
+    return originalReply.call(this, content);
+};
 client.login(process.env.BOT_TOKEN);
