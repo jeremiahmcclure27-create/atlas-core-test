@@ -145,16 +145,16 @@ client.on("messageCreate", async (msg) => {
     });
 });
 
-const originalReply = require("discord.js").Message.prototype.reply;
-require("discord.js").Message.prototype,reply = async function(content) {
+const originalReply = Message.prototype.reply;
+Message.prototype.reply = async function (content) {
     const botLog = {
         role: "Render",
-        message: typeof content === "string" ? content : content.content,
-        timestamp: new Date().toISOString()
+        message: typeof content == "string" ? content : content.content,
+        timestamp: new Date().toISOString(),
     };
 
     fs.appendFile("message_log.json", JSON.stringify(botLog) + ",\n", (err) => {
-      if (err) console.error("Bot log error:", err);
+        if (err) console.error("Bot log error:", err);
     });
 
     return originalReply.call(this, content);
