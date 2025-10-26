@@ -94,14 +94,15 @@ client.on("messageCreate", async (msg) => {
             "Message received. Awaiting context.",
         ],
     };
+
     let reply;
     if (content.includes("ping")) reply = responses.ping;
-    else if (content.includes("info")) reply = repsonses.info;
-    else if (content.includes("quote")) reply = repsonses.quote;
-    else if (content.includes("focus")) reply = reponses.focus;
+    else if (content.includes("info")) reply = responses.info;
+    else if (content.includes("quote")) reply = responses.quote;
+    else if (content.includes("focus")) reply = responses.focus;
     else if (content.includes("hello") || content.includes("hey"))
-        reply = response.hello;
-    else reply = repsonses.default;
+        reply = responses.hello;
+    else reply = responses.default;
     
     const randomReply = reply[Math.floor(Math,random() * reply.length)];
     msg.reply(randomReply);
