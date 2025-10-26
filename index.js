@@ -1,5 +1,5 @@
 import express from "express";
-import { Client, GatewayIntentBits } from "discord.js";
+import { Client, GatewayIntentBits, Message } from "discord.js";
 import "dotenv/config";
 import fs from "fs";
 
