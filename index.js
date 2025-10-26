@@ -104,7 +104,7 @@ client.on("messageCreate", async (msg) => {
         reply = responses.hello;
     else reply = responses.default;
     
-    const randomReply = reply[Math.floor(Math,random() * reply.length)];
+    const randomReply = reply[Math.floor(Math.random() * reply.length)];
     msg.reply(randomReply);
 });
 
