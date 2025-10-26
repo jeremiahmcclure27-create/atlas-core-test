@@ -25,8 +25,23 @@ client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setPresence({
         activities: [{ name: "Monitoring the Core", type: 3}],
-    })
+    });
 });
+
+const presence = [
+    {name: "Monitoring the Core", type: 3},
+    {name: "System diagnostics", type: 3},
+    {name: "Adaptive routines", type: 3},
+    {name: "Pattern analysis", type: 3},
+];
+
+setInterval(() => {
+    const randomPresence =
+      presences[Math.floor(Math.random() * presences.length)];
+    client.user.setPresence({ activities: [randomPresence], status: "online"});
+}, 600000);
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 client.on("messageCreate", async (msg) => {
     if (!client.user) return;
@@ -44,19 +59,52 @@ client.on("messageCreate", async (msg) => {
 
     if (!mentioned) return;
 
-    if (content.includes("ping")) {
-        msg.reply("🔵Connection stable. Systems steady and respoonsive.");
-    }   else if (content.includes("info")) {
-        msg.reply("⚙️Atlas Core Beta v0.1 - calm, stable, and online.");
-    }   else if (content.includes("quote")) {
-        msg.reply("🧠Discipline whispers while chaos shouts. The calm decide.");
-    }   else if (content.includes("focus")) {
-        msg.reply("⏳Stillness sharpens the mind. Focus is the first move.");
-    }   else if (content.includes("hello") || content.includes("hey")) {
-        msg.reply("Present and aware. What's the task?");
-    }   else {
-        msg.reply("Processing input... be precise with your intent.");
-    }
+    const thinkingDelay = Math.random() * 1400 + 800;
+    await wait(thinkingDelay);
+
+    const responses ={
+        ping: [
+            "🛰️ Systems steady and responsive.",
+            "Connection stable. No drift detected.",
+            "Render Core online and focused.",
+        ],
+        info: [
+            "⚙️Render Core v0.2 - adaptive systems active.",
+            "📡Core stable. Monitoring operational layers.",
+            "Atlas link: dormat. Awaiting connection.",
+        ],
+        quote: [
+            "Discipline whispers while chaos shouts. The calm decide.",
+            "Control is freedom measured in patience.",
+            "Purpose defines momentum.",
+        ],
+        focus: [
+            "🎧Stillness sharpens the mind. Focus is the first move.",
+            "🧠Precusuon first. Everything else follows.",
+            "📘Maintain clarity. Systems follow thought.",
+        ],
+        hello: [
+            "Present and aware. What's the task?",
+            "Listening. Ready when you are.",
+            "Systems active. Proceed.",
+        ],
+        default: [
+            "Processing input... be precise with your intent.",
+            "Clarify directive.",
+            "Message received. Awaiting context.",
+        ],
+    };
+    let reply;
+    if (content.includes("ping")) reply = responses.ping;
+    else if (content.includes("info")) reply = repsonses.info;
+    else if (content.includes("quote")) reply = repsonses.quote;
+    else if (content.includes("focus")) reply = reponses.focus;
+    else if (content.includes("hello") || content.includes("hey"))
+        reply = response.hello;
+    else reply = repsonses.default;
+    
+    const randomReply = reply[Math.floor(Math,random() * reply.length)];
+    msg.reply(randomReply);
 });
 
 process.on("unhandledRejection", (err) => 
