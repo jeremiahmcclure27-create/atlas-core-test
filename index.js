@@ -112,9 +112,13 @@ client.on("messageCreate", async (msg) => {
     else reply = responses.default;
     
     await msg.channel.sendTyping();
+    const avgTypingSpeed = 70;
+    const baseDelay = 800;
+    const randomReply = reply[Math.floor(Math.random() * reply.length)];
+    const typingDelay = (randomReply.length / avgTypingSpeed) * 1000 + baseDelay;
     await wait(thinkingDelay);
 
-    const randomReply = reply[Math.floor(Math.random() * reply.length)];
+    await wait(typingDelay);
     msg.reply(randomReply);
 });
 
